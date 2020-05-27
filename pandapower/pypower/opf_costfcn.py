@@ -58,7 +58,7 @@ def opf_costfcn(x, om, return_hessian=False):
     # formulation, pwl cost is the sum of the y variables.
     ipol = find(gencost[:, MODEL] == POLYNOMIAL)   ## poly MW and MVAr costs
     xx = r_[ Pg, Qg ] * baseMVA
-    if len(ipol)>0:
+    if any(ipol):
         f = sum( totcost(gencost[ipol, :], xx[ipol]) )  ## cost of poly P or Q
     else:
         f = 0
