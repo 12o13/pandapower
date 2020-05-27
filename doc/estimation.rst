@@ -85,16 +85,16 @@ Handling of bad data
 
 .. note::  The bad data removal is not very robust at this time. Please treat the results with caution!
 
-The state estimation class allows additionally the removal of bad data, especially single or non-interacting false measurements.
-For detecting bad data the Chi-squared distribution is used to identify the presence of them.
-Afterwards follows the largest normalized residual test that identifys the actual measurements which will be removed at the end.
-Both methods are combined in the *perform_rn_max_test* function that is part of the state estimation class.
-To access it, the following wrapper function *remove_bad_data* has been created.
+The state estimation class also allows the removal of bad data, especially single or non-interacting false measurements.
+The Chi-squared distribution is used to identify the presence of bad data.
+Afterwards, it follows the largest normalized residual test that identifys the 
+actual measurements, which are removed at the end.
+Both methods are combined in the *perform_rn_max_test* function which is part of the state estimation class.
 
 .. autofunction:: pandapower.estimation.remove_bad_data
 
-Nevertheless the Chi-squared test is available as well to allow a identification of topology errors or, as explained, false measurements.
-It is named as *chi2_analysis*. The detection's result of present bad data of the Chi-squared test is stored internally as *bad_data_present* (boolean, class member variable) and returned by the function call.
+Nevertheless the Chi-squared test is available to allow identification of topology errors or, as previously explained, false measurements.
+It is named as *chi2_analysis*. The results from detection of bad data from the Chi-squared test are stored internally as *bad_data_present* (boolean, class member variable) and returned by the function call.
 
 .. autofunction:: pandapower.estimation.chi2_analysis
 
@@ -109,7 +109,7 @@ Example
 
 As an example, we will define measurements for a simple pandapower network *net* with 4 buses. Bus 4 is out-of-service. The external grid is connected at bus 1.
 
-There are multiple measurements available, which have to be defined for the state estimator. There are two voltage measurements at buses 1 and 2. There are two power measurements (active and reactive power) at bus 2. There are also line power measurements at bus 1. The measurements are both for active and reactive power and are located on the line from bus 1 to bus 2 and from bus 1 to bus 3. This yields the following code: 
+Multiple measurements are available and have to be defined for the state estimator. There are two voltage measurements, at buses 1 and 2. There are two power measurements (active and reactive power) at bus 2. There are also two line power measurements at bus 1. The measurements are for both active and reactive power and are located on the line from bus 1 to bus 2 and from bus 1 to bus 3. This yields the following code: 
 
 :: 
 
@@ -138,15 +138,15 @@ The resulting variables now contain the voltage absolute values in *V*, the volt
 The bus power injections can be accessed similarly with *net.res_bus_est.p_mw* and *net.res_bus_est.q_mvar*. Line data is also available in the same format as defined in *res_line*.
 
 
-If we like to check our data for fault measurements, and exclude them in in our state estimation, we use the following code:
+If we'd like to check our data for fault measurements, and exclude them in in our state estimation, we use the following code:
 
 ::
     
     success_rn_max = remove_bad_data(net, init="flat")
     V_rn_max, delta_rn_max = net.res_bus_est.vm_pu, net.res_bus_est.va_degree
 
-In the case that we only like to know if there is a likelihood of fault measurements (probabilty of fault can be adjusted), the Chi-squared test should be performed separatly.
-If the test detects the possibility of fault data, the value of the added class member variable *bad_data_present* would be *true* as well as the boolean variable *success_chi2* that is used here:
+In case we only want to know the likelihood of a faulty measurement (the probabilty of a fault can be adjusted), the Chi-squared test should be performed separatly.
+If the test detects the possibility of faulty data is high enough, the value of the added class member variable *bad_data_present* would be *true* as well as the boolean variable *success_chi2* used here:
 
 ::
 
@@ -187,7 +187,7 @@ Example of using extra estimators:
 	success = estimate(net, algorithm="opt", estimator="ql", a=3)
 
 Note that:
-The state estimation with Scipy Optimization Tool could collapse in some cases with flat start, it's suggested to give the algorithm a warm start or try some other optimization's methods offered by scipy, which preserves the effects of the estimator while helps the convergence.
+The state estimation with Scipy Optimization Tool could collapse in some cases with a flat start, it's suggested to give the algorithm a warm start or try some other optimization's methods offered by scipy, which preserves the effects of the estimator while helping convergence.
 
 Example for chained estimation (warm start for SciPy Optimization Tool):
 ::

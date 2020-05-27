@@ -125,17 +125,17 @@ class Controller(JSONSerializableClass):
 
     def time_step(self, time):
         """
-        It is the first call in each time step, thus suited for things like
+        This is the first call in each time step, thus it is suited for things like
         reading profiles or prepare the controller for the next control step.
 
-        .. note:: This method is ONLY being called during time-series simulation!
+        .. note:: This method is ONLY called during time-series simulation!
         """
         pass
 
     def set_recycle(self):
         """
         Checks the recyclability of this controller and changes the recyclability of the control handler if
-        necessary. With this a faster time series calculation can be achieved since not everything must be
+        necessary. A faster time series calculation can be achieved with this since not everything must be
         recalculated.
 
         Beware: Setting recycle wrong can mess up your results. Set it to False in init if in doubt!
@@ -146,8 +146,8 @@ class Controller(JSONSerializableClass):
 
     def initialize_control(self):
         """
-        Some controller require extended initialization in respect to the
-        current state of the net (or their view of it). This method is being
+        Some controllers require extended initialization in respect to the
+        current state of the net (or their view of it). This method is 
         called after an initial loadflow but BEFORE any control strategies are
         being applied.
 
@@ -158,7 +158,7 @@ class Controller(JSONSerializableClass):
 
     def is_converged(self):
         """
-        This method calculated whether or not the controller converged. This is
+        This method calculates whether or not the controller converged. This is
         where any target values are being calculated and compared to the actual
         measurements. Returns convergence of the controller.
         """
@@ -179,7 +179,7 @@ class Controller(JSONSerializableClass):
         """
         Some controllers can cause net to not converge. In this case, they can implement a method to
         try and catch the load flow error by altering some values in net, for example load scaling.
-        This method is being called in the except block in run_control.
+        This method is called in the except block in run_control.
         Either implement this in a controller that is likely to cause the error, or define
         a special "load flow police" controller for your use case
         """
@@ -197,19 +197,19 @@ class Controller(JSONSerializableClass):
 
     def finalize_control(self):
         """
-        Some controller require extended finalization. This method is being
+        Some controllers require extended finalization. This method is 
         called at the end of a loadflow.
-        It is a separate method from restore_init_state because it is possible that control
-        finalization does not only restore the init state but also something in addition to that,
+        This is a separate method from restore_init_state because it is possible that control
+        finalization does not only restores the init state but also does something 
         that would require the results in net
         """
         pass
 
     def finalize_step(self):
         """
-        .. note:: This method is ONLY being called during time-series simulation!
+        .. note:: This method is ONLY called during time-series simulation!
 
-        After each time step, this method is being called to clean things up or
+        After each time step, this method is being called to clean things up or something
         similar. The OutputWriter is a class specifically designed to store
         results of the loadflow. If the ControlHandler.output_writer got an
         instance of this class, it will be called before the finalize step.
