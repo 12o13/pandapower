@@ -15,8 +15,8 @@ logger = pplog.getLogger(__name__)
 
 class DFData(DataSource):
     """
-    Hold a pandas.DataFrame as the data source, that uses index column as time step.
-    Take care that the data is numeric and all the time steps are present.
+    Uses a pandas.DataFrame as the data source, and uses the columns index as the time step.
+    The data must be numeric and all the time steps listed consecutively, beginning at 0.
 
     Please note: The columns should be integers for scalar accessing!
 

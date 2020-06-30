@@ -15,7 +15,7 @@ logger = pplog.getLogger(__name__)
 
 class DataSource(JSONSerializableClass):
     """
-    The DataSource class is a skeleton for data sources such as pandas DataFrames
+    The DataSource class is a framework for data sources such as pandas DataFrames
     Controllers call get_time_step_values(time) in each time step to get values from the data source
     """
 
@@ -28,6 +28,6 @@ class DataSource(JSONSerializableClass):
     def get_time_step_value(self, time_step, profile_name, scale_factor=1.0):
         """
         This method retrieves values of the data source according to the given parameters.
-        For actual parameters look into the DataSource you are actually using.
+        For actual parameters look into the DataSource being used.
         """
         raise NotImplementedError("Subclasses should implement this!")
